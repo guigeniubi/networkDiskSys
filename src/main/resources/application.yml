@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    username: root
+    password: zengb123
+    url: jdbc:mysql:///myvideo
+
+hadoop:
+  fs:
+    defaultFS: hdfs://192.168.88.128:9000
+  user:
+    name: hadoop01
+
+logging:
+  level:
+    com.example: debug
+
+mybatis-plus:
+  mapper-locations: classpath*:mapper.sys/*.xml
