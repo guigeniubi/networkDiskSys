@@ -2,8 +2,7 @@ spring:
   datasource:
     username: root
     password: zengb123
-    url: jdbc:mysql:///myvideo
-
+    url: jdbc:mysql:///netdisk
 hadoop:
   fs:
     defaultFS: hdfs://192.168.88.128:9000

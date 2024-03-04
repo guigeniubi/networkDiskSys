@@ -1,4 +1,4 @@
-package com.example.hadooppj.service;
+package com.lantu.sys.service;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
