@@ -1,0 +1,29 @@
+server:
+  port: 9999
+spring:
+  datasource:
+    username: root
+    password: zengb123
+    url: jdbc:mysql:///xdb
+
+  redis:
+    port: 6379
+    host: localhost
+
+
+hadoop:
+  fs:
+    defaultFS: hdfs://192.168.88.128:9000
+  user:
+    name: hadoop01
+logging:
+  level:
+      com.lantu: debug
+
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-not-delete-value: 0
+      logic-delete-value: 1
+  type-aliases-package: com.lantu.*.entity
