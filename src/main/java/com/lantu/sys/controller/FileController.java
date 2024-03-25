@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lantu.common.utils.HadoopUtil;
 import com.lantu.common.vo.Result;
 import com.lantu.sys.entity.File;
+import com.lantu.sys.entity.User;
 import com.lantu.sys.service.IFileService;
+import com.lantu.sys.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -29,15 +31,19 @@ public class FileController {
     @Autowired
     private IFileService fileService;
 
+    @Autowired
+    private IUserService userService;
 
     @Autowired
     private HadoopUtil hadoopUtil;
     @GetMapping("/list")
-    public Result<Map<String,Object>> getRoleList(@RequestParam(value = "fileName",required = false) String fileName,
+    public Result<Map<String,Object>> getFileList(@RequestParam(value = "fileName",required = false) String fileName,
                                                   @RequestParam(value = "pageNo") Long pageNo,
-                                                  @RequestParam(value = "pageSize") Long pageSize){
+                                                  @RequestParam(value = "pageSize") Long pageSize,
+                                                  @RequestParam(value = "id") Integer id){
+        User user = userService.getUserById(id);
         LambdaQueryWrapper<File> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(StringUtils.hasLength(fileName),File::getFileName,fileName);
+        wrapper.eq(StringUtils.hasLength(fileName),File::getFileName,fileName).eq(File::getUserId, id);;
 
         Page<File> page = new Page<>(pageNo,pageSize);
         fileService.page(page,wrapper);

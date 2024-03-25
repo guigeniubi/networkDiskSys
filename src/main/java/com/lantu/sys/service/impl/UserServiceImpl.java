@@ -154,6 +154,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                             .map(userRole ->{ return  userRole.getRoleId();})
                             .collect(Collectors.toList());
         user.setRoleIdList(roleIdList);
+        System.out.println(user.getId());
         return user;
 
     }
