@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 /**
  * <p>
  *  前端控制器
@@ -40,14 +41,17 @@ public class FileController {
     public Result<Map<String,Object>> getFileList(@RequestParam(value = "fileName",required = false) String fileName,
                                                   @RequestParam(value = "pageNo") Long pageNo,
                                                   @RequestParam(value = "pageSize") Long pageSize,
-                                                  @RequestParam(value = "id") Integer id){
-        User user = userService.getUserById(id);
+                                                  @RequestParam(value = "type") String fileType,
+                                                  @RequestHeader("X-Token") String token){
+        User user= userService.getUserByToken(token);
         LambdaQueryWrapper<File> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(StringUtils.hasLength(fileName),File::getFileName,fileName).eq(File::getUserId, id);;
-
+        if (StringUtils.hasLength(fileName)) {
+            wrapper.eq(File::getFileName, fileName);
+        }
+        System.out.println(user);
+        wrapper.eq(File::getUserId, user.getId()).eq(File::getFileType, fileType);
         Page<File> page = new Page<>(pageNo,pageSize);
         fileService.page(page,wrapper);
-
         Map<String,Object>data=new HashMap<>();
         data.put("total",page.getTotal());
         data.put("rows",page.getRecords());

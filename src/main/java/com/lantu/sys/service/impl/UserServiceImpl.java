@@ -124,6 +124,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
+    public User getUserByToken(String token) {
+        try {
+            return jwtUtil.parseToken(token, User.class);
+        } catch (Exception e) {
+            // 解析失败，返回 null 或者进行其他错误处理
+            return null;
+        }
+    }
+
+    @Override
     public void logout(String token) {
 
 //        redisTemplate.delete(token);
